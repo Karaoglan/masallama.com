@@ -1,63 +1,60 @@
-import React, { Component } from 'react';
-import ReactGA from 'react-ga';
-import $ from 'jquery';
-import './App.css';
-import Header from './Components/Header';
-import Footer from './Components/Footer';
-import About from './Components/About';
-import Resume from './Components/Resume';
-import Contact from './Components/Contact';
-import Testimonials from './Components/Testimonials';
-import Portfolio from './Components/Portfolio';
+import React, { Component } from "react";
+import logo from "./udilia-logo-white.svg";
+import UnderConstruction from "./lib";
 
 class App extends Component {
-
-  constructor(props){
-    super(props);
-    this.state = {
-      resumeData: {}
-    };
-
-    ReactGA.initialize('UA-110570651-1');
-    ReactGA.pageview(window.location.pathname);
-
-  }
-
-  getResumeData(){
-      const load = document.getElementById('siteLoading')
-    $.ajax({
-      url:'/resumeData.json',
-      dataType:'json',
-      cache: false,
-      success: function(data){
-        this.setState({resumeData: data});
-        setTimeout(()=>{
-          load.outerHTML='';
-        },500)
-      }.bind(this),
-      error: function(xhr, status, err){
-        console.log(err);
-        alert(err);
-      }
-    });
-  }
-
-  componentDidMount(){
-    this.getResumeData();
-  }
-
-
   render() {
     return (
-      <div className="App">
-        <Header data={this.state.resumeData.main}/>
-        <About data={this.state.resumeData.main}/>
-        <Resume data={this.state.resumeData.resume}/>
-        <Portfolio data={this.state.resumeData.portfolio}/>
-        <Testimonials data={this.state.resumeData.testimonials}/>
-        <Contact data={this.state.resumeData.main}/>
-        <Footer data={this.state.resumeData.main}/>
-      </div>
+      <UnderConstruction
+        background={{
+          image:
+            "https://static.pexels.com/photos/259698/pexels-photo-259698.jpeg",
+          textColor: "#fff",
+          overlay: {
+            color: "#000",
+            opacity: ".5",
+          },
+        }}
+        logo={{
+          src: logo,
+          alt: "logo",
+          style: {
+            width: "80px",
+          },
+        }}
+        description={{
+          text:
+            "Sizler için MASALLAMA websitemizi güncelliyoruz, Detay için takipte kalın!",
+          style: {
+            maxWidth: "440px",
+          },
+        }}
+        subscribe={{
+          placeholder: "Mailinizi Giriniz!",
+          buttonText: "Kaydol",
+          onSubmit: (value) => {
+            console.log("user typed email :", value);
+          },
+        }}
+        links={[
+          {
+            url: "https://www.facebook.com/",
+            image: "https://image.flaticon.com/icons/svg/220/220200.svg",
+          },
+          {
+            url: "https://www.twitter.com/",
+            image: "https://image.flaticon.com/icons/svg/145/145812.svg",
+          },
+          {
+            url: "https://www.linkedin.com/",
+            image: "https://image.flaticon.com/icons/svg/145/145807.svg",
+          },
+          {
+            url: "mailto:iletisim@disar.org.tr",
+            image: "https://image.flaticon.com/icons/svg/321/321817.svg",
+          },
+        ]}
+      />
     );
   }
 }
